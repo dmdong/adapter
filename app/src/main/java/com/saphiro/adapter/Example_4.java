@@ -19,6 +19,8 @@ public class Example_4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_4);
 
+        lv4 = (ListView) findViewById(R.id.lv4);
+
         countries = new ArrayList<>();
         countries.add(new Country("Vietnam", "Việt Nam"));
         countries.add(new Country("Vietnam", "Việt Nam"));

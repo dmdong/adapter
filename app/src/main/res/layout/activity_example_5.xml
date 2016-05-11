@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.saphiro.adapter.Example_4">
+    tools:context="com.saphiro.adapter.Example_5">
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lv4"></ListView>
+        android:id="@+id/lv5"></ListView>
 
 </LinearLayout>
