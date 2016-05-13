@@ -19,9 +19,8 @@ import java.util.List;
 public class Example_6 extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView lv6;
-    List<String> files;
+    List<String> explorer;
     TextView path;
-    String filepath;
     File filedir;
 
     @Override
@@ -30,14 +29,29 @@ public class Example_6 extends AppCompatActivity implements AdapterView.OnItemCl
         setContentView(R.layout.activity_example_6);
 
         lv6 = (ListView) findViewById(R.id.lv6);
-        lv6.setOnItemClickListener(this);
+        if (lv6 != null) {
+            lv6.setOnItemClickListener(this);
+        }
         path = (TextView) findViewById(R.id.path);
-        filepath = Environment.getExternalStorageDirectory().getPath();
-
-        getFolder(filepath);
+        String root = Environment.getExternalStorageDirectory().getPath();
+        getFolder(root);
     }
 
+    public void getFolder(String filepath) {
+        path.setText(filepath);
+        explorer = new ArrayList<>();
+        explorer.add("../");
 
+        filedir = new File(filepath);
+        //        for (String e : filedir.list()) {
+//            File toAdd = new File(e);
+//            if ((toAdd.isDirectory() || toAdd.isFile()) && !toAdd.isHidden() && toAdd.canRead()) {
+//                explorer.add(e);
+//            }
+//        }
+        for (String e : filedir.list()) {
+            explorer.add(e);
+        }
 //        if (filedir.isDirectory()){
 //            File[] filedirs = filedir.listFiles();
 //            for (int i = 0; i<filedirs.length; i++){
@@ -49,60 +63,31 @@ public class Example_6 extends AppCompatActivity implements AdapterView.OnItemCl
 //        for (int i=0; i<dir.length; i++){
 //            files.add(dir[i]);
 //        }
-
-
-    public void getFolder(String filepath) {
-
-        path.setText(filepath);
-        files = new ArrayList<>();
-        files.add("../");
-
-
-        filedir = new File(filepath);
-        for (String e : filedir.list()) {
-            if (filedir.isDirectory() && !filedir.isHidden() && filedir.canRead()) {
-                files.add(e);
-            }
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, files);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, explorer);
         lv6.setAdapter(adapter);
 
-
     }
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        File file = new File(files.get(position));
-//        if (file.isDirectory() && !file.isHidden() && file.canRead()) {
-//            getFolder(file.getAbsolutePath());}
-//    }
-
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
         String itemclicked;
-        File file = new File(filedir.getPath());
-
-
-        if (files.get(position).equals("../")) {
-            itemclicked = file.getParent();
+        if (explorer.get(position).equals("../")) {
+            itemclicked = filedir.getParent();
         } else {
-            itemclicked = filedir + "/" + files.get(position);
+            itemclicked = filedir + "/" + explorer.get(position);
         }
-        // String itemclicked = filepath+"/Music";
-        Toast.makeText(Example_6.this, itemclicked, Toast.LENGTH_SHORT).show();
 
+        Toast.makeText(Example_6.this, itemclicked, Toast.LENGTH_SHORT).show();
+        File clicked = new File(itemclicked);
+        if (clicked.isDirectory()) {
+            if (clicked.getParentFile() != null) {
+                getFolder(itemclicked);
+            } else view.setEnabled(false);
+        } else view.setEnabled(false);
 
 //        File file = new File(files.get(position));
 //        if (file.isDirectory() && !file.isHidden() && file.canRead()) {
 //            getFolder(file.getAbsolutePath());}
-
-        if (filedir.isDirectory()) {
-            getFolder(itemclicked);
-        } else {
-
-        }
     }
 }
