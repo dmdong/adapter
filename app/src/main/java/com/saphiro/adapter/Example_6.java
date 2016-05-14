@@ -1,6 +1,9 @@
 package com.saphiro.adapter;
 
+import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
 
 public class Example_6 extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -43,15 +47,27 @@ public class Example_6 extends AppCompatActivity implements AdapterView.OnItemCl
         explorer.add("../");
 
         filedir = new File(filepath);
-        //        for (String e : filedir.list()) {
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//        int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+//        int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        if (permissionCheck1 != PackageManager.PERMISSION_GRANTED || permissionCheck2 != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                            android.Manifest.permission.READ_EXTERNAL_STORAGE},
+//                    1);
+//        }
+
+        // = filedir.listFiles();
+        for (String e : filedir.list()) {
 //            File toAdd = new File(e);
 //            if ((toAdd.isDirectory() || toAdd.isFile()) && !toAdd.isHidden() && toAdd.canRead()) {
-//                explorer.add(e);
+//
 //            }
-//        }
-        for (String e : filedir.list()) {
             explorer.add(e);
         }
+//        for (File e : flist) {
+//            explorer.add(e.getPath());
+//        }
 //        if (filedir.isDirectory()){
 //            File[] filedirs = filedir.listFiles();
 //            for (int i = 0; i<filedirs.length; i++){
