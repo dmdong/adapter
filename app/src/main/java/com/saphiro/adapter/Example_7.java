@@ -74,6 +74,7 @@ public class Example_7 extends AppCompatActivity {
                 SQLiteDatabase sqLiteDatabase = SQLiteDatabase.openDatabase(path, null,
                         SQLiteDatabase.OPEN_READONLY);
 
+
                 String[] Column = {COL_ENAME, COL_VNAME, COL_FLAG};
 
                 //Truy vấn
